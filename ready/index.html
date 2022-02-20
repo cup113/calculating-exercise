@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="charset" content="UTF-8"/>
+        <meta name="generator" content="Visual Studio Code"/>
+        <meta name="author" content="Jason Li"/>
+        <meta name="description" content="">
+        <meta name="keywords" content=""/>
+        <meta name="robots" content="index,follow"/>
+        <title>速算练习</title>
+        <link rel="shortcut icon" href="../../img/cube.ico" type="image/x-icon">
+        <link rel="stylesheet" href="style.css"/>
+        <link rel="stylesheet" href="../../Lib/footer.css" red="stylesheet">
+        <script src="../../Lib/jQuery.js" charset="utf-8"></script>
+        <script src="../../Lib/alertN.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <h1>出发吧！</h1>
+        <div id="main">
+            <div class="choose">
+                <span>项目</span>
+                <div>
+                    <select id="item" onchange="change_item();">
+                        <option value="1">两数相加（拼位数）</option>
+                        <option value="2">多数连加（拼个数）</option>
+                        <option value="3">三数相乘（拼位数）</option>
+                        <option value="4">多数连乘（拼个数）</option>
+                        <option value="5">平方数（拼速度）</option>
+                    </select>
+                </div>
+            </div>
+            <div class="choose">
+                <span>难度</span>
+                <div>
+                    <select id="diff">
+                        <option value="">....loading</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input">
+                <span>答题次数</span>
+                <div>
+                    <input type="number" min="1" max="100" id="questionNum"/>
+                </div>
+            </div>
+            <div class="submit">
+                <input type="button" value="提交 submit √" onclick="submit();">
+            </div>
+            <span></span>
+        </div>
+        <footer>
+            <span>版本号：V1.2.0</span>
+            <span>|</span>
+            <a href="../../homepage/index.html" target="_blank">开发者首页</a>
+            <span>|</span>
+            <a href="../readme.html" target="_blank">使用说明</a>
+            <span>|</span>
+            <a href="../../feedback/index.html" target="_blank">反馈</a>
+        </footer>
+        <script src="script.js" charset="utf-8"></script>
+    </body>
+</html>
