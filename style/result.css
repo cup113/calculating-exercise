@@ -1,0 +1,44 @@
+body>div:nth-child(3) {
+	background-image: url("../img/calculator.svg");
+	background-color: #00cbc5;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}
+
+#res-main {
+	background-color: #ffffffd0;
+	margin: 0 10vw;
+	padding: 1em 2em;
+	font-size: 2em;
+	border: 2px solid black;
+	box-sizing: border-box;
+	max-height: 100vh;
+}
+
+#res-main>div {
+	text-align: center;
+	border: 1px dashed black;
+}
+
+.rem-time-ms {
+	color: gray;
+	font-size: 0.75em;
+}
+
+.rem-imp {
+	background-color: cyan;
+}
+
+.rem-imp, .rem-nor {
+	display: grid;
+	grid-template-areas: "item value";
+	grid-template-columns: 5em auto;
+	padding: 4px 0;
+}
+
+.rem-imp>span:nth-child(1), .rem-nor>span:nth-child(1) {
+	grid-area: item;
+	border-right: 1px solid black;
+	box-sizing: border-box;
+}

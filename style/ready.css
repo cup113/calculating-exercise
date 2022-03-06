@@ -1,0 +1,50 @@
+#rd-form {
+	font-size: 2em;
+	padding: 0.5em 0.5em;
+	margin: 1em 2em;
+	border: 1px solid black;
+	border-radius: 4px;
+	background-color: #cccccc;
+}
+
+.rd-input {
+	font-size: 1em;
+}
+
+#rd-form select>option {
+	font-size: 0.5em;
+}
+
+.rd-item {
+	margin-right: 3em;
+	display: grid;
+	grid-template-columns: 30% 70%;
+	grid-template-areas: "desc input";
+}
+
+.rd-item>span:nth-child(1) {
+	grid-area: desc;
+	text-align: center;
+	box-sizing: border-box;
+	border-right: 2px solid gray;
+}
+
+.rd-item>span:nth-child(2) {
+	grid-area: input;
+	text-align: center;
+}
+
+.rd-input {
+	min-width: 50%;
+}
+
+#rd-submit {
+	text-align: right;
+	margin-right: 5em;
+}
+
+#rd-submit-button {
+	background-color: darkgreen;
+	color: white;
+	font-size: 2em;
+}

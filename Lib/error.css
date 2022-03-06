@@ -1,0 +1,34 @@
+#error {
+	position: fixed;
+	right: 2vw;
+	bottom: 2vh;
+	width: 50vw;
+}
+
+.error-item {
+	display: grid;
+	grid-template-columns: 3em auto 2em;
+	grid-template-rows: 3em;
+	grid-template-areas: "icon text close";
+	background-color: #dddddd;
+}
+
+.error-item>span:nth-child(1) {
+	grid-area: icon;
+	font-size: 2em;
+	border-radius: 1em;
+	background-color: #bbbbbb;
+}
+
+.error-item>span:nth-child(2) {
+	grid-area: text;
+	word-break: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: center;
+}
+
+.error-item>span:nth-child(3) {
+	font-size: 2em;
+	color: gray;
+}
