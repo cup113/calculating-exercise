@@ -1,127 +1,131 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-    <head>
-        <meta name="charset" content="UTF-8"/>
-        <meta name="generator" content="Visual Studio Code"/>
-        <meta name="author" content="Jason Li"/>
-        <meta name="description" content="速算练习是一个可以给你进行简单速算练习（例如乘法）的网站，目前支持30种模式，可以有效提升你的计算力。"/>
-        <meta name="keywords" content="计算,速算,加法,乘法,练习"/>
-        <meta name="robots" content="index,follow"/>
-        <title>速算练习</title>
-        <link rel="shortcut icon" href="../img/cube.ico" type="image/x-icon">
-        <link rel="stylesheet" href="Lib/footer.css">
-        <link rel="stylesheet" href="Lib/button.css">
-        <link rel="stylesheet" href="Lib/error.css">
-        <link rel="stylesheet" href="style/frame.css">
-        <link rel="stylesheet" href="style/ready.css">
-        <link rel="stylesheet" href="style/exercise.css">
-        <link rel="stylesheet" href="style/result.css">
-        <script src="Lib/jquery-3.6.0.min.js"></script>
-    </head>
-    <body>
-        <div>
-            <a name="ready"></a>
-            <h2>出发吧！</h2>
-            <div id="rd-form">
-                <div class="rd-item">
-                    <span>项目</span>
-                    <span><select class="rd-input" name="item" id="rd-form-item" onchange="/**/">
-                        <option value="0" style="display: none"> --请选择-- </option>
-                        <option value="1">两数相加</option>
-                        <option value="2">多数连加</option>
-                        <option value="3">两数相减</option>
-                        <option value="4">两数相乘</option>
-                        <option value="5">多数连乘</option>
-                        <option value="6">平方数</option>
-                        <option value="7">开平方</option>
-                        <option value="8">两数相除</option>
-                        <option value="9" title="一元二次方程/b²-4ac">根的判别式</option>
-                    </select></span>
-                </div>
-                <div class="rd-item">
-                    <span>难度</span>
-                    <span><select class="rd-input" name="diff" id="rd-form-diff">
-                        <option value="0" class="none-display"> --请先选择项目-- </option>
-                    </select></span>
-                </div>
-                <div class="rd-item">
-                    <span>题数</span>
-                    <span><input class="rd-input" type="number" name="number" id="rd-form-number" min="1" max="1000" step="1"></span>
-                </div>
+<head>
+    <meta name="charset" content="UTF-8"/>
+    <meta name="generator" content="Visual Studio Code"/>
+    <meta name="author" content="Jason Li"/>
+    <meta name="description" content="速算练习是一个可以给你进行简单速算练习（例如乘法）的网站，目前支持30种模式，可以有效提升你的计算力。"/>
+    <meta name="keywords" content="计算,速算,加法,乘法,练习"/>
+    <meta name="robots" content="index,follow"/>
+    <title>速算练习</title>
+    <link rel="shortcut icon" href="../img/cube.ico" type="image/x-icon">
+    <link rel="stylesheet" href="Lib/footer.css">
+    <link rel="stylesheet" href="Lib/button.css">
+    <link rel="stylesheet" href="Lib/error.css">
+    <link rel="stylesheet" href="style/frame.css">
+    <link rel="stylesheet" href="style/ready.css">
+    <link rel="stylesheet" href="style/exercise.css">
+    <link rel="stylesheet" href="style/result.css">
+    <script src="Lib/jquery-3.6.0.min.js"></script>
+    <script src="Lib/BigInteger.js/BigInteger.min.js"></script>
+</head>
+<body>
+    <div>
+        <a name="ready"></a>
+        <h2>出发吧！</h2>
+        <div id="rd-form">
+            <div class="rd-item">
+                <span>项目</span>
+                <span><select class="rd-input" name="item" id="rd-form-item" onchange="set_rItem(0);">
+                    <option value="0" style="display: none"> --请选择-- </option>
+                    <option value="1">两数相加</option>
+                    <option value="2">多数连加</option>
+                    <option value="3">两数相减</option>
+                    <option value="4">两数相乘</option>
+                    <option value="5">多数连乘</option>
+                    <option value="6">平方数</option>
+                    <option value="7" title="保证有整数解">开平方</option>
+                    <option value="8" title="保证有整数解">两数相除</option>
+                    <option value="9" title="一元二次方程/b²-4ac">根的判别式</option>
+                </select></span>
             </div>
-            <div id="rd-submit"><button class="button-d" onclick="error_display('333');" id="rd-submit-button">提交 Submit</button></div>
-            <a href="#exercise" class="none-display" id="rd-a"></a>
-            <footer></footer>
+            <div class="rd-item">
+                <span>难度</span>
+                <span><select class="rd-input" name="diff" id="rd-form-diff" onchange="set_rDifficulty(0);">
+                    <option value="0" class="none-display"> --请先选择项目-- </option>
+                </select></span>
+            </div>
+            <div class="rd-item">
+                <span>题数</span>
+                <span><input class="rd-input" type="number" name="number" id="rd-form-number" min="1" max="1000" step="1" onchange="set_rQuesNumber(0);"></span>
+            </div>
         </div>
-        <div>
-            <a name="exercise"></a>
-            <h2>速算练习</h2>
-            <div id="ex-progress" style="--w: 0;">
-                <div id="ex-progress-bar"></div>
-                <span id="ex-progress-text">第0题 / 共1题</span>
+        <div id="rd-submit"><button class="button-d" onclick="ready_submit();" id="rd-submit-button">提交 Submit</button></div>
+        <a href="#exercise" class="none-display" id="rd-a"></a>
+        <footer></footer>
+    </div>
+    <div>
+        <a name="exercise"></a>
+        <h2>速算练习</h2>
+        <div id="ex-progress" style="--w: 0;">
+            <div id="ex-progress-bar"></div>
+            <span id="ex-progress-text">第0题 / 共1题</span>
+        </div>
+        <div id="ex-data">
+            <div class="ex-data-item">
+                <span>已答题目(道)</span>
+                <span id="ex-data-answered">0</span>
+            </div
+            ><div class="ex-data-item">
+                <span>正确题目(道)</span>
+                <span id="ex-data-correct">0</span>
+            </div
+            ><div class="ex-data-item">
+                <span>已用时间(s)</span>
+                <span id="ex-data-usedtime">
+                    <span>0</span><span>.000</span>
+                </span>
+            </div
+            ><div class="ex-data-item">
+                <span>已答(题次)</span>
+                <span id="ex-data-answeredtimes">0</span>
             </div>
-            <div id="ex-data">
-                <div class="ex-data-item">
-                    <span>已答题目(道)</span>
-                    <span id="ex-data-answered">0</span>
-                </div
-                ><div class="ex-data-item">
-                    <span>正确题目(道)</span>
-                    <span id="ex-data-correct">0</span>
-                </div
-                ><div class="ex-data-item">
-                    <span>已用时间(s)</span>
-                    <span id="ex-data-usedtime">
-                        <span>0</span><span>.000</span>
-                    </span>
-                </div
-                ><div class="ex-data-item">
-                    <span>已答(题次)</span>
-                    <span id="ex-data-answeredtimes">0</span>
-                </div>
-            </div>
-            <div id="ex-main">
-                <p id="ex-m-question">
-                    <span>问题:</span><span id="ex-m-questiontext">请点击“开始”按钮</span>
-                </p>
-                <p id="ex-m-answer">
-                    <span>回答:</span><input type="text" id="ex-m-answertext" name="answer">
-                </p>
-                <div id="ex-bt">
+        </div>
+        <div id="ex-main">
+            <p id="ex-m-question">
+                <span>问题:</span><span id="ex-m-questiontext">请点击“开始”按钮</span>
+            </p>
+            <p id="ex-m-answer">
+                <span>回答:</span><input type="text" id="ex-m-answertext" name="answer">
+            </p>
+            <div id="ex-bt">
 
-                    <button id="ex-button" onclick="/**/">开始 Start →</button>
-                </div>
+                <button id="ex-button" onclick="/**/">开始 Start →</button>
             </div>
-            <div id="ex-info">
-                <div id="ex-info-special">
-                    <!--存放特殊提示类信息-->1
-                </div>
-                <div id="ex-info-step" style="--color: #00bb00;">
-                    <!--存放指示类信息-->1
-                </div>
-            </div>
-            <a href="#result" class="none-display"></a>
-            <footer></footer>
         </div>
-        <div>
-            <a name="result"></a>
-            <div id="res-main">
-                <div>速算练习-成绩单</div>
-                <div class="rem-imp"><span>题目类型</span><span id="rem-type">大项-小项</span></div>
-                <div class="rem-nor"><span>开始时间</span><span id="rem-start">yy/mm/dd hh:mm:ss</span></div>
-                <div class="rem-imp"><span>总题数</span><span id="rem-number">00</span></div>
-                <div class="rem-nor"><span>正确题数</span><span id="rem-correct">00</span></div>
-                <div class="rem-nor"><span>总时长</span><span id="rem-time"><span>000秒</span><span class="rem-time-ms">000毫秒</span></span></div>
-                <div class="rem-nor"><span>回答题次</span><span id="rem-answered">00</span></div>
-                <div class="rem-imp"><span>正确率</span><span  id="rem-accuracy">00.0%</span></div>
-                <div class="rem-imp"><span>题均时长</span><span id="rem-avgtime"><span>00秒</span><span class="rem-time-ms">000毫秒</span></span></div>
-                <div>速算练习: <a href="#ready" id="rem-link"></a></div>
+        <div id="ex-info">
+            <div id="ex-info-special">
+                <!--存放特殊提示类信息-->1
             </div>
-            <footer></footer>
+            <div id="ex-info-step" style="--color: #00bb00;">
+                <!--存放指示类信息-->1
+            </div>
         </div>
-        <div id="error"></div>
-        <script src="dist/footer.js"></script>
-        <script src="dist/error.js"></script>
-        <script src="dist/init.js"></script>
-    </body>
+        <a href="#result" class="none-display" id="ex-a"></a>
+        <footer></footer>
+    </div>
+    <div>
+        <a name="result"></a>
+        <div id="res-main">
+            <div>速算练习-成绩单</div>
+            <div class="rem-imp"><span>题目类型</span><span id="rem-type">大项-小项</span></div>
+            <div class="rem-nor"><span>开始时间</span><span id="rem-start">yy/mm/dd hh:mm:ss</span></div>
+            <div class="rem-imp"><span>总题数</span><span id="rem-number">00</span></div>
+            <div class="rem-nor"><span>正确题数</span><span id="rem-correct">00</span></div>
+            <div class="rem-nor"><span>总时长</span><span id="rem-time"><span>000秒</span><span class="rem-time-ms">000毫秒</span></span></div>
+            <div class="rem-nor"><span>回答题次</span><span id="rem-answered">00</span></div>
+            <div class="rem-imp"><span>正确率</span><span  id="rem-accuracy">00.0%</span></div>
+            <div class="rem-imp"><span>题均时长</span><span id="rem-avgtime"><span>00秒</span><span class="rem-time-ms">000毫秒</span></span></div>
+            <div>速算练习: <a href="#ready" id="rem-link"></a></div>
+        </div>
+        <footer></footer>
+    </div>
+    <div id="error"></div>
+    <script src="dist/footer.js" charset="utf-8"></script>
+    <script src="dist/error.js" charset="utf-8"></script>
+    <script src="dist/data.js" charset="utf-8"></script>
+    <script src="dist/init.js"></script>
+    <script src="dist/ready.js"></script>
+    <script src="dist/exercise.js"></script>
+</body>
 </html>

@@ -15,3 +15,7 @@ body>div:not(#error) {
 body>div>h2 {
 	text-align: center;
 }
+
+option[title] {
+	cursor: help;
+}
