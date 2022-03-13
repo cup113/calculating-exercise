@@ -1,6 +1,5 @@
 /// <reference path="./error.ts"/>
 /// <reference path="./data.ts"/>
-/// <reference path="./exercise.ts"/>
 
 var readyQuestionNumber: number = 10,
 readyItem: number = 1,
@@ -49,7 +48,6 @@ function set_rDifficulty(_rDifficulty: number) {
 function ready_submit() {
 	if (set_rQuesNumber(0) + set_rDifficulty(0) + set_rItem(0) === 0) {
 		$("#rd-a")[0].click();
-		init_exercise();
 	}
 	else {
 		error_display("提交失败");
@@ -67,6 +65,7 @@ function init_ready() {
 	$("#rd-form-item").val(readyItem.toString());
 	set_rQuesNumber(readyQuestionNumber);
 	$("#rd-form-number").val(readyQuestionNumber.toString());
+	$("<span></span>").appendTo($("<a href='#ready'></a>")).trigger("click");
 }
 
 init_ready();

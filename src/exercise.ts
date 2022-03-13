@@ -25,7 +25,7 @@ class Question {
 	private update_date() {
 		this.lastTime = new Date();
 		var duration_now = this.lastTime.getTime() - this.startTime.getTime() + usedTime;
-		$("#ex-data-usedtime").html(`<span>${Math.floor(duration_now / 1000).toString()}</span><span>${duration_now % 1000}</span>`);
+		$("#ex-data-usedtime").html(`<span>${Math.floor(duration_now / 1000).toString()}</span><span>.${duration_now % 1000}</span>`);
 	}
 	private add_fault(_fault: string) {
 		this.faults.push(_fault);
@@ -36,9 +36,11 @@ class Question {
 		this.update_date();
 		this.endTime = this.lastTime;
 		this.duration = (this.endTime.getTime() - this.startTime.getTime());
+		usedTime += this.duration;
 		$("#ex-info-step").css({"--color": "#00bb00"}).text(`答对了。答案就是${this.correctAnswer}。请点击“下一题”继续。`);
 		this.correct = (this.faults.length === 0);
 		if (this.correct) add_correctAnswer();
+		$("#ex-data-answered").text(questionNow.id.toString());
 	}
 	public answer(_answerText: string): boolean {
 		var isAnswerCorrect = _answerText === this.correctAnswer;
@@ -62,7 +64,16 @@ function init_exercise() {
 	usedTime = 0;
 	correctNumber = 0;
 	answerNumber = 0;
-	dataNumber = dataNumbers[readyItem][readyDifficulty - 1]
+	dataNumber = dataNumbers[readyItem - 1][readyDifficulty - 1];
+	update_progressbar();
+	$("#ex-data-answered").text(questionNow.id.toString());
+	$("#ex-data-correct").text(correctNumber.toString());
+	$("#ex-data-usedtime").html(`<span>${Math.floor(usedTime / 1000)}</span><span>.${sup0(usedTime % 1000, 3)}</span>`);
+	$("#ex-data-answeredtimes").text(answerNumber.toString());
+	$("#ex-m-questiontext").text("请点击“开始”按钮");
+	$("#ex-info-special").text(dataspText[readyItem]);
+	$("#ex-info-step").text("请点击“开始”按钮开始计时");
+	$("#ex-button").trigger("focus");
 }
 
 function add_correctAnswer() {
@@ -77,23 +88,44 @@ function add_answerNumber() {
 
 function update_progressbar() {
 	$("#ex-progress").css({"--w": (questionNow.id / readyQuestionNumber).toFixed(4)});
-	$("#ex-progress-text").text(`第${questionNow.id}题 / 共${readyQuestionNumber}题`);
+	$("#ex-progress").text(`第${questionNow.id}题 / 共${readyQuestionNumber}题`);
+}
+
+function answerEnter(event: KeyboardEvent) {
+	if (event.key === "Enter" && (!questionNow.get_correct()) && questionNow.id !== 0) {
+		ex_submit();
+		$("#ex-button").trigger("focus");
+	}
 }
 
 function ex_submit() {
-	var passed = questionNow.answer($("#ex-m-answertext").val() as string);
-	if (passed) {
-		$("#ex-button").text("提交 Submit ✔").on('click', ex_next_question);
-		update_progressbar();
+	if (questionNow.id > readyQuestionNumber) {
+		error_display("请等待跳转", 2000, "❕");
+		return;
 	}
-	if (questionNow.id === readyQuestionNumber) {
-		error_display("3秒后即将进入结果报告界面", 2900, "✔");
-		ex_finish();
+	var tempanswer = $("#ex-m-answertext").val() as string,
+	answer: string = "";
+	for (let i=0; i<tempanswer.length; i++) if (dataAvlChar.indexOf(tempanswer[i]) !== -1) answer += tempanswer[i];
+	var passed = questionNow.answer(answer);
+	if (passed) {
+		$("#ex-button").text("下一题 Next →");
+		document.getElementById("ex-button").onclick = function (event) {ex_next_question();};
+		update_progressbar();
+		if (questionNow.id === readyQuestionNumber) {
+			error_display("3秒后即将进入结果报告界面", 2900, "✔");
+			setTimeout(ex_finish, 3000);
+		}
+	}
+	else {
+		$("#ex-m-answertext").trigger("focus");
 	}
 }
 
 function ex_next_question() {
 	generate_question();
+	document.getElementById("ex-button").textContent = "提交 Submit ✔";
+	document.getElementById("ex-button").onclick = function (event) {ex_submit();}; 
+	$("#ex-m-answertext").trigger("focus").val("");
 }
 
 function ex_finish() {
@@ -120,6 +152,14 @@ function siRandom(lowerbound: number, upperbound: number) {
 	return (Math.floor(Math.sqrt(iRandom(0, (upperbound - lowerbound) ** 2))) + lowerbound);
 }
 
+function sup0(num: number, length: number = 3): string {
+	var result: string = num.toString();
+	while (result.length < length) {
+		result = "0" + result;
+	}
+	return result;
+}
+
 function generate_question() {
 	// 出题
 	var questionText: string, correctAnswer: string;
@@ -130,6 +170,7 @@ function generate_question() {
 			sum = addend1.add(addend2);
 			questionText = `${addend1.toString()} + ${addend2.toString()} = ?`;
 			correctAnswer = sum.toString();
+			break;
 		}
 		case 2: { // 多数连加
 			var addends: string[] = [],
@@ -141,6 +182,7 @@ function generate_question() {
 			}
 			questionText = addends.join(" + ") + " = ?"
 			correctAnswer = sum.toString();
+			break;
 		}
 		case 3: { // 两数相减
 			var minuend: BigInteger,
@@ -151,6 +193,7 @@ function generate_question() {
 			minuend = subtrahend.add(diff);
 			questionText = `${minuend.toString()} - ${subtrahend.toString()} = ?`;
 			correctAnswer = diff.toString()
+			break;
 		}
 		case 4: { // 两数相乘
 			var factor1: BigInteger,
@@ -161,6 +204,7 @@ function generate_question() {
 			product = factor1.multiply(factor2);
 			questionText = `${factor1.toString()} × ${factor2.toString()} = ?`;
 			correctAnswer = product.toString();
+			break;
 		}
 		case 5: { // 多数连乘
 			var factors: string[] = [],
@@ -172,6 +216,7 @@ function generate_question() {
 			}
 			questionText = factors.join(" × ") + " = ?";
 			correctAnswer = product.toString();
+			break;
 		}
 		case 6: { // 平方数
 			var digits = siRandom(Math.floor(dataNumber % 1000 / 100), Math.floor(dataNumber % 10)),
@@ -179,6 +224,7 @@ function generate_question() {
 			base = bRandom(digits, true, topRange);
 			questionText = `${base.toString()}² = ?`;
 			correctAnswer = base.square().toString();
+			break;
 		}
 		case 7: { // 开平方
 			var digits = siRandom(Math.floor(dataNumber % 1000 / 100), Math.floor(dataNumber % 10)),
@@ -186,6 +232,7 @@ function generate_question() {
 			base = bRandom(digits, true, topRange);
 			questionText = `${base.square().toString()}² = ?`;
 			correctAnswer = base.toString();
+			break;
 		}
 		case 8: { // 两数相除
 			var quotient: BigInteger = bRandom(dataNumber % 100, true),
@@ -193,6 +240,7 @@ function generate_question() {
 			dividend: BigInteger = quotient.multiply(divisor);
 			questionText = `${dividend.toString()} ÷ ${divisor.toString()} = ?`;
 			correctAnswer = quotient.toString();
+			break;
 		}
 		case 9: { // 一元二次方程根的判别式
 			var a: BigInteger = bRandom(siRandom(1, Math.ceil(dataNumber / 3)), true),
@@ -201,11 +249,12 @@ function generate_question() {
 			result = b.square().minus(a.multiply(c).multiply(4));
 			questionText = `a=${a.toString()}, b=${b.toString()}, c=${c.toString()}`;
 			correctAnswer = result.toString();
+			break;
 		}
 	}
 	var newQuestion = new Question(questionNow.id + 1, questionText, correctAnswer);
 	questions.push(newQuestion);
 	questionNow = newQuestion;
-	$("#ex-m-question").text(questionNow.quesText);
+	$("#ex-m-questiontext").text(questionNow.quesText);
 	$("#ex-info-step").css({"--color": "#000000"}).text("答题完毕请点击“提交”，或按回车(Enter键)");
 }

@@ -51,15 +51,14 @@
             </div>
         </div>
         <div id="rd-submit"><button class="button-d" onclick="ready_submit();" id="rd-submit-button">提交 Submit</button></div>
-        <a href="#exercise" class="none-display" id="rd-a"></a>
+        <a href="#exercise" class="none-display" id="rd-a" onclick="init_exercise();"></a>
         <footer></footer>
     </div>
     <div>
         <a name="exercise"></a>
         <h2>速算练习</h2>
         <div id="ex-progress" style="--w: 0;">
-            <div id="ex-progress-bar"></div>
-            <span id="ex-progress-text">第0题 / 共1题</span>
+            第0题 / 共1题
         </div>
         <div id="ex-data">
             <div class="ex-data-item">
@@ -86,22 +85,21 @@
                 <span>问题:</span><span id="ex-m-questiontext">请点击“开始”按钮</span>
             </p>
             <p id="ex-m-answer">
-                <span>回答:</span><input type="text" id="ex-m-answertext" name="answer">
+                <span>回答:</span><input type="text" id="ex-m-answertext" name="answer" onkeypress="answerEnter(event);">
             </p>
             <div id="ex-bt">
-
-                <button id="ex-button" onclick="/**/">开始 Start →</button>
+                <button id="ex-button" onclick="ex_next_question();">开始 Start →</button>
             </div>
         </div>
         <div id="ex-info">
             <div id="ex-info-special">
                 <!--存放特殊提示类信息-->1
             </div>
-            <div id="ex-info-step" style="--color: #00bb00;">
+            <div id="ex-info-step" style="--color: #000000;">
                 <!--存放指示类信息-->1
             </div>
         </div>
-        <a href="#result" class="none-display" id="ex-a"></a>
+        <a href="#result" class="none-display" id="ex-a" onclick="init_result();"></a>
         <footer></footer>
     </div>
     <div>
@@ -118,14 +116,16 @@
             <div class="rem-imp"><span>题均时长</span><span id="rem-avgtime"><span>00秒</span><span class="rem-time-ms">000毫秒</span></span></div>
             <div>速算练习: <a href="#ready" id="rem-link"></a></div>
         </div>
+        <div id="report"></div>
         <footer></footer>
     </div>
     <div id="error"></div>
-    <script src="dist/footer.js" charset="utf-8"></script>
-    <script src="dist/error.js" charset="utf-8"></script>
-    <script src="dist/data.js" charset="utf-8"></script>
+    <script src="dist/footer.js"></script>
+    <script src="dist/error.js"></script>
+    <script src="dist/data.js"></script>
     <script src="dist/init.js"></script>
     <script src="dist/ready.js"></script>
     <script src="dist/exercise.js"></script>
+    <script src="dist/result.js"></script>
 </body>
 </html>
