@@ -1,4 +1,4 @@
-/// <reference path="../Lib/BigInteger.js/BigInteger.d.ts"/>
+/// <reference path="../Lib/BigInteger/BigInteger.d.ts"/>
 /// <reference path="./ready.ts"/>
 
 class Question {
