@@ -45,7 +45,11 @@ class Question {
 	public answer(_answerText: string): boolean {
 		var isAnswerCorrect = _answerText === this.correctAnswer;
 		if (isAnswerCorrect) this.end();
-		else this.add_fault(_answerText);
+		else if (this.faults.length === 0 || this.faults[this.faults.length - 1] !== _answerText) this.add_fault(_answerText);
+		else {
+			error_display("答案与上一次重复");
+			return false;
+		}
 		add_answerNumber();
 		return isAnswerCorrect;
 	}
@@ -71,9 +75,10 @@ function init_exercise() {
 	$("#ex-data-usedtime").html(`<span>${Math.floor(usedTime / 1000)}</span><span>.${sup0(usedTime % 1000, 3)}</span>`);
 	$("#ex-data-answeredtimes").text(answerNumber.toString());
 	$("#ex-m-questiontext").text("请点击“开始”按钮");
-	$("#ex-info-special").text(dataspText[readyItem]);
+	$("#ex-info-special").text(dataspText[readyItem - 1]);
 	$("#ex-info-step").text("请点击“开始”按钮开始计时");
 	$("#ex-button").trigger("focus");
+	$("#ex-m-answertext").val("");
 }
 
 function add_correctAnswer() {
@@ -122,6 +127,10 @@ function ex_submit() {
 }
 
 function ex_next_question() {
+	if (questionNow.id >= readyQuestionNumber) {
+		error_display("请等待跳转", 2000, "❕");
+		return;
+	}
 	generate_question();
 	document.getElementById("ex-button").textContent = "提交 Submit ✔";
 	document.getElementById("ex-button").onclick = function (event) {ex_submit();}; 
@@ -139,7 +148,7 @@ function bRandom(digits: number, endAvoid0: boolean = false, topRange: number[] 
 		str += Math.floor(Math.random() * 10).toString();
 	}
 	if (digits >= 2) {
-		str += (9 - Math.floor(Math.random() * ((endAvoid0)? 10: 9))).toString();
+		str += (9 - Math.floor(Math.random() * ((endAvoid0)? 9: 10))).toString();
 	}
 	return bigInt(str);
 }
@@ -208,7 +217,7 @@ function generate_question() {
 		}
 		case 5: { // 多数连乘
 			var factors: string[] = [],
-			product: BigInteger = bigInt(0);
+			product: BigInteger = bigInt(1);
 			for (let i=0; i<dataNumber; i++) {
 				let factor = bRandom(2, true);
 				factors.push(factor.toString());
@@ -230,7 +239,7 @@ function generate_question() {
 			var digits = siRandom(Math.floor(dataNumber % 1000 / 100), Math.floor(dataNumber % 10)),
 			topRange = [Math.floor(dataNumber / 1000), Math.floor(dataNumber % 100 / 10)],
 			base = bRandom(digits, true, topRange);
-			questionText = `${base.square().toString()}² = ?`;
+			questionText = `?² = ${base.square().toString()}`;
 			correctAnswer = base.toString();
 			break;
 		}

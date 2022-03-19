@@ -1,4 +1,4 @@
-/// <reference path="../Lib/BigInteger.js/BigInteger.d.ts"/>
+/// <reference path="../Lib/BigInteger/BigInteger.d.ts"/>
 /// <reference path="./ready.ts"/>
 var Question = /** @class */ (function () {
     function Question(id, quesText, correctAnswer) {
@@ -45,8 +45,12 @@ var Question = /** @class */ (function () {
         var isAnswerCorrect = _answerText === this.correctAnswer;
         if (isAnswerCorrect)
             this.end();
-        else
+        else if (this.faults.length === 0 || this.faults[this.faults.length - 1] !== _answerText)
             this.add_fault(_answerText);
+        else {
+            error_display("答案与上一次重复");
+            return false;
+        }
         add_answerNumber();
         return isAnswerCorrect;
     };
@@ -69,9 +73,10 @@ function init_exercise() {
     $("#ex-data-usedtime").html("<span>".concat(Math.floor(usedTime / 1000), "</span><span>.").concat(sup0(usedTime % 1000, 3), "</span>"));
     $("#ex-data-answeredtimes").text(answerNumber.toString());
     $("#ex-m-questiontext").text("请点击“开始”按钮");
-    $("#ex-info-special").text(dataspText[readyItem]);
+    $("#ex-info-special").text(dataspText[readyItem - 1]);
     $("#ex-info-step").text("请点击“开始”按钮开始计时");
     $("#ex-button").trigger("focus");
+    $("#ex-m-answertext").val("");
 }
 function add_correctAnswer() {
     correctNumber += 1;
@@ -115,6 +120,10 @@ function ex_submit() {
     }
 }
 function ex_next_question() {
+    if (questionNow.id >= readyQuestionNumber) {
+        error_display("请等待跳转", 2000, "❕");
+        return;
+    }
     generate_question();
     document.getElementById("ex-button").textContent = "提交 Submit ✔";
     document.getElementById("ex-button").onclick = function (event) { ex_submit(); };
@@ -132,7 +141,7 @@ function bRandom(digits, endAvoid0, topRange) {
         str += Math.floor(Math.random() * 10).toString();
     }
     if (digits >= 2) {
-        str += (9 - Math.floor(Math.random() * ((endAvoid0) ? 10 : 9))).toString();
+        str += (9 - Math.floor(Math.random() * ((endAvoid0) ? 9 : 10))).toString();
     }
     return bigInt(str);
 }
@@ -190,7 +199,7 @@ function generate_question() {
             break;
         }
         case 5: { // 多数连乘
-            var factors = [], product = bigInt(0);
+            var factors = [], product = bigInt(1);
             for (var i = 0; i < dataNumber; i++) {
                 var factor = bRandom(2, true);
                 factors.push(factor.toString());
@@ -208,7 +217,7 @@ function generate_question() {
         }
         case 7: { // 开平方
             var digits = siRandom(Math.floor(dataNumber % 1000 / 100), Math.floor(dataNumber % 10)), topRange = [Math.floor(dataNumber / 1000), Math.floor(dataNumber % 100 / 10)], base = bRandom(digits, true, topRange);
-            questionText = "".concat(base.square().toString(), "\u00B2 = ?");
+            questionText = "?\u00B2 = ".concat(base.square().toString());
             correctAnswer = base.toString();
             break;
         }

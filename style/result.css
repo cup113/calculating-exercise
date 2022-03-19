@@ -42,3 +42,53 @@ body>div:nth-child(3) {
 	border-right: 1px solid black;
 	box-sizing: border-box;
 }
+
+#report {
+	margin: 10vh 10vw 0 10vw;
+	background-color: #ffffccd0;
+}
+
+#report>span {
+	display: grid;
+	grid-template-areas: "num ques ans time res faults";
+	grid-template-columns: 3em auto auto 5em 3em 5em;
+	text-align: center;
+	word-break: break-all;
+	border: 1px solid black;
+}
+
+#report .red {
+	color: red;
+}
+
+#report .green {
+	color: green;
+}
+
+#report>span>span {
+	border-right: 1px dashed gray;
+}
+
+#report>span>span:nth-child(1) {
+	grid-area: num;
+}
+
+#report>span>span:nth-child(2) {
+	grid-area: ques;
+}
+
+#report>span>span:nth-child(3) {
+	grid-area: ans;
+}
+
+#report>span>span:nth-child(4) {
+	grid-area: time;
+}
+
+#report>span>span:nth-child(5) {
+	grid-area: res;
+}
+
+#report>span>span:nth-child(6) {
+	grid-area: faults;
+}
