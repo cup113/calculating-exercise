@@ -6,7 +6,7 @@ body {
 	overflow-y: hidden;
 }
 
-body>div:not(#error) {
+body>div:not(#__error) {
 	overflow-y: scroll;
 	overflow-x: hidden;
 	height: 100vh;

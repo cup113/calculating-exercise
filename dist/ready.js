@@ -35,9 +35,9 @@ function set_rItem(_rItem) {
 function set_rDifficulty(_rDifficulty) {
     if (_rDifficulty === 0)
         _rDifficulty = parseInt($("#rd-form-diff").val());
-    if (isNaN(_rDifficulty) || _rDifficulty <= 0 || _rDifficulty >= 10)
+    if (isNaN(_rDifficulty) || _rDifficulty <= 0 || _rDifficulty >= 11)
         error_display("请选择正确的项目");
-    else if (dataItems[readyItem][_rDifficulty - 1].slice(0, 1) == "--")
+    else if (dataItems[readyItem][_rDifficulty - 1].slice(0, 2) == "--")
         error_display("请选择有对应难度的项目");
     else {
         readyDifficulty = _rDifficulty;

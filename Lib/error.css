@@ -1,11 +1,12 @@
-#error {
+#__error {
 	position: fixed;
 	right: 2vw;
 	bottom: 2vh;
 	width: 50vw;
+	z-index: 0;
 }
 
-.error-item {
+.__error-item {
 	display: grid;
 	grid-template-columns: 3em auto 2em;
 	grid-template-rows: 3em;
@@ -13,14 +14,14 @@
 	background-color: #dddddd;
 }
 
-.error-item>span:nth-child(1) {
+.__error-item>span:nth-child(1) {
 	grid-area: icon;
 	font-size: 2em;
 	border-radius: 1em;
 	background-color: #bbbbbb;
 }
 
-.error-item>span:nth-child(2) {
+.__error-item>span:nth-child(2) {
 	grid-area: text;
 	word-break: normal;
 	overflow: hidden;
@@ -28,7 +29,7 @@
 	text-align: center;
 }
 
-.error-item>span:nth-child(3) {
+.__error-item>span:nth-child(3) {
 	font-size: 2em;
 	color: gray;
 }

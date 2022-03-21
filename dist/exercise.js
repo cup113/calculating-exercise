@@ -45,12 +45,16 @@ var Question = /** @class */ (function () {
         var isAnswerCorrect = _answerText === this.correctAnswer;
         if (isAnswerCorrect)
             this.end();
-        else if (this.faults.length === 0 || this.faults[this.faults.length - 1] !== _answerText)
-            this.add_fault(_answerText);
-        else {
-            error_display("答案与上一次重复");
+        else if (this.faults.length !== 0 && this.faults[this.faults.length - 1] === _answerText) {
+            error_display("答案与上一次重复", 3000);
             return false;
         }
+        else if (_answerText.length === 0) {
+            error_display("答案不能为空", 4000);
+            return false;
+        }
+        else
+            this.add_fault(_answerText);
         add_answerNumber();
         return isAnswerCorrect;
     };
@@ -77,6 +81,9 @@ function init_exercise() {
     $("#ex-info-step").text("请点击“开始”按钮开始计时");
     $("#ex-button").trigger("focus");
     $("#ex-m-answertext").val("");
+    $("#ex-button").text("开始 Start →");
+    document.getElementById("ex-button").onclick = function (event) { ex_next_question(); };
+    update_progressbar();
 }
 function add_correctAnswer() {
     correctNumber += 1;
