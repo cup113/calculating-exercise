@@ -25,7 +25,7 @@ class Question {
 	private update_date() {
 		this.lastTime = new Date();
 		var duration_now = this.lastTime.getTime() - this.startTime.getTime() + usedTime;
-		$("#ex-data-usedtime").html(`<span>${Math.floor(duration_now / 1000).toString()}</span><span>.${duration_now % 1000}</span>`);
+		$("#ex-data-usedtime").html(`<span>${Math.floor(duration_now / 1000).toString()}</span><span>.${sup0(duration_now % 1000,3)}</span>`);
 	}
 	private add_fault(_fault: string) {
 		this.faults.push(_fault);
@@ -86,6 +86,12 @@ function init_exercise() {
 	$("#ex-button").text("开始 Start →");
 	document.getElementById("ex-button").onclick = function (event) {ex_next_question();};
 	update_progressbar();
+}
+
+function backward_to_ready() {
+	var goNext = confirm("确定要返回到准备页面吗? 这将重置你的所有数据。");
+	if (!goNext) return;
+	$("<span></span>").appendTo("<a href='#ready'></a>").trigger("click");
 }
 
 function add_correctAnswer() {
