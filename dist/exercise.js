@@ -159,10 +159,10 @@ function bRandom(digits, endAvoid0, topRange) {
     return bigInt(str);
 }
 function iRandom(lowerbound, upperbound) {
-    return Math.floor((Math.random() * (upperbound - lowerbound))) + lowerbound;
+    return Math.floor((Math.random() * (upperbound - lowerbound + 1))) + lowerbound;
 }
 function siRandom(lowerbound, upperbound) {
-    return (Math.floor(Math.sqrt(iRandom(0, Math.pow((upperbound - lowerbound), 2)))) + lowerbound);
+    return (Math.floor(Math.sqrt(iRandom(0, Math.pow((upperbound - lowerbound + 1), 2) - 1))) + lowerbound);
 }
 function sup0(num, length) {
     if (length === void 0) { length = 3; }

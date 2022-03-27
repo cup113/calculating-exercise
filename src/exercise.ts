@@ -167,11 +167,11 @@ function bRandom(digits: number, endAvoid0: boolean = false, topRange: number[] 
 }
 
 function iRandom(lowerbound: number, upperbound: number) {
-	return Math.floor((Math.random() * (upperbound - lowerbound))) + lowerbound;
+	return Math.floor((Math.random() * (upperbound - lowerbound + 1))) + lowerbound;
 }
 
 function siRandom(lowerbound: number, upperbound: number) {
-	return (Math.floor(Math.sqrt(iRandom(0, (upperbound - lowerbound) ** 2))) + lowerbound);
+	return (Math.floor(Math.sqrt(iRandom(0, (upperbound - lowerbound + 1) ** 2 - 1))) + lowerbound);
 }
 
 function sup0(num: number, length: number = 3): string {
