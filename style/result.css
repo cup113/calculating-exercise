@@ -46,15 +46,21 @@ body>div:nth-child(3) {
 #report {
 	margin: 10vh 10vw 0 10vw;
 	background-color: #ffffccd0;
+	text-align: center;
 }
 
 #report>span {
-	display: grid;
-	grid-template-areas: "num ques ans time res faults";
-	grid-template-columns: 3em auto auto 5em 3em 5em;
-	text-align: center;
+	display: inline-grid;
+	grid-template-areas:
+	"num res time"
+	"ques ques ques"
+	"ans ans faults";
+	grid-template-columns: 3rem 3rem 7rem;
+	grid-template-rows: 3rem auto 3rem;
 	word-break: break-all;
-	border: 1px solid black;
+	border: 2px solid black;
+	margin: 1rem;
+	place-items: center;
 }
 
 #report .red {
@@ -66,27 +72,39 @@ body>div:nth-child(3) {
 }
 
 #report>span>span {
-	border-right: 1px dashed gray;
+	display: inline-block;
+    width: 100%;
+    height: 100%;
 }
 
 #report>span>span:nth-child(1) {
 	grid-area: num;
+	font-size: 2rem;
+	background-color: #dddddd;
 }
 
 #report>span>span:nth-child(2) {
-	grid-area: ques;
+	grid-area: res;
+	font-size: 2rem;
+	font-weight: bold;
+	background-color: #bbbbff;
 }
 
 #report>span>span:nth-child(3) {
-	grid-area: ans;
+	grid-area: time;
+	font-size: 1.5rem;
+	background-color: #bbffbb;
 }
 
 #report>span>span:nth-child(4) {
-	grid-area: time;
+	grid-area: ques;
+	background-color: #ffddbb;
 }
 
 #report>span>span:nth-child(5) {
-	grid-area: res;
+	grid-area: ans;
+	font-size: 2rem;
+	background-color: #dddddd;
 }
 
 #report>span>span:nth-child(6) {

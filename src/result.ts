@@ -14,16 +14,15 @@ function init_result() {
 	$("#rem-avgtime").html(`<span>${Math.floor(avgTime / 1000)}秒</span><span class="rem-time-ms">${sup0(avgTime % 1000, 3)}毫秒</span>`);
 	$("#rem-link").text(location.href.split("#")[0]);
 	var $report = $("#report");
-	$("<span><span>题号</span><span>问题</span><span>标答</span><span>用时</span><span>结果</span><span>错误答案</span></span>").appendTo($report);
 	for (let i in questions) {
 		let q = questions[i];
 		$("<span></span>")
 		.append($("<span></span>").text(q.id.toString()))
-		.append($("<span></span>").text(q.quesText))
-		.append($("<span></span>").text(q.correctAnswer))
+		.append($("<span></span>").text((q.get_correct())? "T": "F").attr({"class": ((q.get_correct())? "green": "red")}))
 		.append($("<span></span>").text(`${Math.floor(q.get_duration() / 1000).toString()}.${(q.get_duration() % 1000).toString()}秒`))
-		.append($("<span></span>").text((q.get_correct())? "正确": "错误").attr({"class": ((q.get_correct())? "green": "red")}))
-		.append($("<span></span>").html(q.get_faults().join("<br>")))
+		.append($("<span></span>").text(q.quesText))
+		.append($("<span></span>").text(q.correctAnswer).attr({"class": "green"}))
+		.append($("<span></span>").html(q.get_faults().join("<br>")).attr({"class": "red"}))
 		.appendTo($report);
 	}
 }
