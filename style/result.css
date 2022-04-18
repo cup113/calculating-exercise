@@ -56,7 +56,7 @@ body>div:nth-child(3) {
 	"ques ques ques"
 	"ans ans faults";
 	grid-template-columns: 3rem 3rem 7rem;
-	grid-template-rows: 3rem auto 3rem;
+	grid-template-rows: 3rem auto auto;
 	word-break: break-all;
 	border: 2px solid black;
 	margin: 1rem;
@@ -103,7 +103,7 @@ body>div:nth-child(3) {
 
 #report>span>span:nth-child(5) {
 	grid-area: ans;
-	font-size: 2rem;
+	font-size: 1.5rem;
 	background-color: #dddddd;
 }
 
