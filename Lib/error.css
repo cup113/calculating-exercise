@@ -3,7 +3,9 @@
 	right: 2vw;
 	bottom: 2vh;
 	width: 50vw;
+	max-height: 50vh;
 	z-index: 0;
+	overflow-y: hidden;
 }
 
 .__error-item {
