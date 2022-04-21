@@ -1,4 +1,4 @@
-/// <reference path="./error.ts"/>
+/// <reference path="../src/error.d.ts"/>
 /// <reference path="./data.ts"/>
 
 var readyQuestionNumber: number = 10,
