@@ -19,7 +19,7 @@ function init_result() {
 		$("<span></span>")
 		.append($("<span></span>").text(q.id.toString()))
 		.append($("<span></span>").text((q.get_correct())? "T": "F").attr({"class": ((q.get_correct())? "green": "red")}))
-		.append($("<span></span>").text(`${Math.floor(q.get_duration() / 1000).toString()}.${(q.get_duration() % 1000).toString()}秒`))
+		.append($("<span></span>").text(`${(q.get_duration() / 1000).toFixed(3)}秒`))
 		.append($("<span></span>").text(q.quesText))
 		.append($("<span></span>").text(q.correctAnswer).attr({"class": "green"}))
 		.append($("<span></span>").html(q.get_faults().join("<br>")).attr({"class": "red"}))

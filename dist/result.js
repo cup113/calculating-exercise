@@ -18,7 +18,7 @@ function init_result() {
         $("<span></span>")
             .append($("<span></span>").text(q.id.toString()))
             .append($("<span></span>").text((q.get_correct()) ? "T" : "F").attr({ "class": ((q.get_correct()) ? "green" : "red") }))
-            .append($("<span></span>").text("".concat(Math.floor(q.get_duration() / 1000).toString(), ".").concat((q.get_duration() % 1000).toString(), "\u79D2")))
+            .append($("<span></span>").text("".concat((q.get_duration() / 1000).toFixed(3), "\u79D2")))
             .append($("<span></span>").text(q.quesText))
             .append($("<span></span>").text(q.correctAnswer).attr({ "class": "green" }))
             .append($("<span></span>").html(q.get_faults().join("<br>")).attr({ "class": "red" }))
