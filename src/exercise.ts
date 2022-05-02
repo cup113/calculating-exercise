@@ -46,11 +46,11 @@ class Question {
 		var isAnswerCorrect = _answerText === this.correctAnswer;
 		if (isAnswerCorrect) this.end();
 		else if (this.faults.length !== 0 && this.faults[this.faults.length - 1] === _answerText) {
-			error_display("答案与上一次重复", 3000);
+			Err.error_display("答案与上一次重复", 3000);
 			return false;
 		}
 		else if (_answerText.length === 0) {
-			error_display("答案不能为空", 4000);
+			Err.error_display("答案不能为空", 4000);
 			return false;
 		}
 		else this.add_fault(_answerText);
@@ -118,7 +118,7 @@ function answerEnter(event: KeyboardEvent) {
 
 function ex_submit() {
 	if (questionNow.id > readyQuestionNumber) {
-		error_display("请等待跳转", 2000, "❕");
+		Err.error_display("请等待跳转", 2000, "❕");
 		return;
 	}
 	var tempanswer = $("#ex-m-answertext").val() as string,
@@ -130,7 +130,7 @@ function ex_submit() {
 		document.getElementById("ex-button").onclick = function (event) {ex_next_question();};
 		update_progressbar();
 		if (questionNow.id === readyQuestionNumber) {
-			error_display("3秒后即将进入结果报告界面", 2900, "✔");
+			Err.error_display("3秒后即将进入结果报告界面", 2900, "✔");
 			setTimeout(ex_finish, 3000);
 		}
 	}
@@ -141,7 +141,7 @@ function ex_submit() {
 
 function ex_next_question() {
 	if (questionNow.id >= readyQuestionNumber) {
-		error_display("请等待跳转", 2000, "❕");
+		Err.error_display("请等待跳转", 2000, "❕");
 		return;
 	}
 	generate_question();

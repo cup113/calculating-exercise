@@ -5,33 +5,38 @@
 	width: 50vw;
 	max-height: 50vh;
 	z-index: 0;
-	overflow-y: hidden;
 }
 
 .__error-item {
-	display: grid;
-	grid-template-columns: 3em auto 2em;
-	grid-template-rows: 3em;
-	grid-template-areas: "icon text close";
+	display: flex;
+	width: 50vw;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	min-height: 2em;
+	max-height: 5em;
 	background-color: #dddddd;
 }
 
 .__error-item>span:nth-child(1) {
-	grid-area: icon;
+	width: 1.5em;
+	height: 1.5em;
 	font-size: 2em;
-	border-radius: 1em;
+	border-radius: 0.75em;
 	background-color: #bbbbbb;
 }
 
 .__error-item>span:nth-child(2) {
-	grid-area: text;
-	word-break: normal;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	text-align: center;
+	width: calc(100% - 6rem);
+	max-height: 5em;
+	word-break: break-word;
+	overflow-y: auto;
 }
 
-.__error-item>span:nth-child(3) {
+.__error-item>button {
 	font-size: 2em;
 	color: gray;
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 0.5em;
 }
