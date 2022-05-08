@@ -1,17 +1,21 @@
 .button-i {
 	cursor: text;
+	-webkit-user-select: text;
 	user-select: text;
 	background-color: khaki;
 	padding: 0 1rem;
 	border: 1px solid black;
+	box-sizing: border-box;
 }
 
 .button-d {
 	background-color: khaki;
 	cursor: pointer;
+	-webkit-user-select: none;
 	user-select: none;
 	padding: 0 1rem;
 	border: 2px solid black;
+	font-size: 1em;
 }
 
 .button-d.active {
@@ -22,9 +26,18 @@
 	padding: 0;
 }
 
+.button-d:focus {
+	background-color: #ffff66;
+}
+
 .button-d:active {
 	border-top-color: gray;
 	border-left-color: gray;
+}
+
+.button-d:disabled {
+	background-color: gray;
+	cursor: not-allowed;
 }
 
 .none-display {

@@ -1,5 +1,6 @@
 /// <reference path="../Lib/BigInteger/BigInteger.d.ts"/>
-/// <reference path="./ready.ts"/>
+/// <reference path="../src/ready.ts"/>
+/// <reference path="../src/result.ts"/>
 var Question = /** @class */ (function () {
     function Question(id, quesText, correctAnswer) {
         this.id = 0; // 编号(从1开始)
@@ -89,7 +90,8 @@ function backward_to_ready() {
     var goNext = confirm("确定要返回到准备页面吗? 这将重置你的所有数据。");
     if (!goNext)
         return;
-    $("<span></span>").appendTo("<a href='#ready'></a>").trigger("click");
+    $("#exercise").addClass("none-display");
+    $("#ready").removeClass("none-display");
 }
 function add_correctAnswer() {
     correctNumber += 1;
@@ -143,7 +145,9 @@ function ex_next_question() {
     $("#ex-m-answertext").trigger("focus").val("");
 }
 function ex_finish() {
-    $("#ex-a")[0].click();
+    $("#exercise").addClass("none-display");
+    $("#result").removeClass("none-display");
+    init_result();
 }
 function bRandom(digits, endAvoid0, topRange) {
     if (endAvoid0 === void 0) { endAvoid0 = false; }

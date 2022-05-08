@@ -22,8 +22,7 @@
     <script src="Lib/footer.js"></script>
 </head>
 <body>
-    <div>
-        <a name="ready"></a>
+    <div id="ready" class="none-display">
         <h2>出发吧！</h2>
         <div id="rd-form">
             <div class="rd-item">
@@ -32,14 +31,14 @@
                     <option value="0" style="display: none"> --请选择-- </option>
                     <option value="1">两数相加</option>
                     <option value="2">多数连加</option>
-                    <option value="3" title="保证结果为正数/被减数可能会多一位">两数相减</option>
+                    <option value="3" >两数相减</option>
                     <option value="4">两数相乘</option>
                     <option value="5">多数连乘</option>
                     <option value="6">平方数</option>
-                    <option value="7" title="保证有整数解">开平方</option>
-                    <option value="8" title="保证有整数解">两数相除</option>
-                    <option value="9" title="一元二次方程/b²-4ac">根的判别式</option>
-                </select></span>
+                    <option value="7">开平方</option>
+                    <option value="8">两数相除</option>
+                    <option value="9">根的判别式</option>
+                </select><span id="rd-form-item-note"></span></span>
             </div>
             <div class="rd-item">
                 <span>难度</span>
@@ -52,12 +51,9 @@
                 <span><input class="rd-input" type="number" name="number" id="rd-form-number" min="1" max="1000" step="1" onchange="set_rQuesNumber(0);"></span>
             </div>
         </div>
-        <div id="rd-submit"><button class="button-d" onclick="ready_submit();" id="rd-submit-button">提交 Submit</button></div>
-        <a href="#exercise" class="none-display" id="rd-a" onclick="init_exercise();"></a>
+        <div id="rd-submit"><button class="button-d" onclick="ready_submit();" id="rd-submit-button">提交 Submit ✔</button></div>
     </div>
-    <div>
-        <a name="exercise"></a>
-        <br>
+    <div id="exercise" class="none-display">
         <button onclick="backward_to_ready();" id="ex-backward"><img src="img/backward.svg" alt="返回"></button>
         <h2>速算练习</h2>
         <div id="ex-progress" style="--w: 0;">
@@ -102,10 +98,8 @@
                 <!--存放指示类信息-->1
             </div>
         </div>
-        <a href="#result" class="none-display" id="ex-a" onclick="init_result();"></a>
     </div>
-    <div>
-        <a name="result"></a>
+    <div id="result" class="none-display">
         <div id="res-main">
             <div>速算练习-成绩单</div>
             <div class="rem-imp"><span>题目类型</span><span id="rem-type">大项-小项</span></div>
@@ -116,7 +110,7 @@
             <div class="rem-nor"><span>回答题次</span><span id="rem-answered">00</span></div>
             <div class="rem-imp"><span>正确率</span><span id="rem-accuracy">00.0%</span></div>
             <div class="rem-imp"><span>题均时长</span><span id="rem-avgtime"><span>00秒</span><span class="rem-time-ms">000毫秒</span></span></div>
-            <div>速算练习: <a href="#ready" id="rem-link"></a></div>
+            <div>速算练习: <a href="javascript:void(0);" id="rem-link" onclick="res_finish();">Calculating Exercise</a></div>
         </div>
         <div id="report"></div>
     </div>

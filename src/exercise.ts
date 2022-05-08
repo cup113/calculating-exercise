@@ -1,5 +1,6 @@
 /// <reference path="../Lib/BigInteger/BigInteger.d.ts"/>
-/// <reference path="./ready.ts"/>
+/// <reference path="../src/ready.ts"/>
+/// <reference path="../src/result.ts"/>
 
 class Question {
 	readonly id: number = 0; // 编号(从1开始)
@@ -91,7 +92,8 @@ function init_exercise() {
 function backward_to_ready() {
 	var goNext = confirm("确定要返回到准备页面吗? 这将重置你的所有数据。");
 	if (!goNext) return;
-	$("<span></span>").appendTo("<a href='#ready'></a>").trigger("click");
+	$("#exercise").addClass("none-display");
+	$("#ready").removeClass("none-display");
 }
 
 function add_correctAnswer() {
@@ -151,7 +153,9 @@ function ex_next_question() {
 }
 
 function ex_finish() {
-	$("#ex-a")[0].click();
+	$("#exercise").addClass("none-display");
+	$("#result").removeClass("none-display");
+	init_result();
 }
 
 function bRandom(digits: number, endAvoid0: boolean = false, topRange: number[] = [1, 9]): BigInteger {

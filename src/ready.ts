@@ -1,5 +1,6 @@
 /// <reference path="../src/error.d.ts"/>
-/// <reference path="./data.ts"/>
+/// <reference path="../src/data.ts"/>
+/// <reference path="../src/exercise.ts"/>
 
 var readyQuestionNumber: number = 10,
 readyItem: number = 1,
@@ -22,10 +23,12 @@ function set_rItem(_rItem: number) {
 	if (isNaN(_rItem) || _rItem <= 0 || _rItem >= 11) Err.error_display("请选择正确的项目");
 	else {
 		readyItem = _rItem;
-		var $diff = $("#rd-form-diff").html("");
+		var $diff = $("#rd-form-diff").html(""),
+		note = dateItemNotes[readyItem - 1];
 		for (let i in dataItems[readyItem]) {
 			$("<option></option>").text(`(${dataDiffs[i]})${dataItems[readyItem][i]}`).appendTo($diff).attr({"value": (parseInt(i) + 1).toString()});
 		}
+		$("#rd-form-item-note").text((note.length > 0)? ("注: " + dateItemNotes[readyItem - 1]): "");
 		$diff.val(readyDifficulty.toString());
 		localStorage.setItem("CE_item", readyItem.toString())
 		return 0;
@@ -47,7 +50,9 @@ function set_rDifficulty(_rDifficulty: number) {
 
 function ready_submit() {
 	if (set_rQuesNumber(0) + set_rDifficulty(0) + set_rItem(0) === 0) {
-		$("#rd-a")[0].click();
+		init_exercise();
+		$("#exercise").removeClass("none-display");
+		$("#ready").addClass("none-display");
 	}
 	else {
 		Err.error_display("提交失败");
@@ -65,7 +70,7 @@ function init_ready() {
 	$("#rd-form-item").val(readyItem.toString());
 	set_rQuesNumber(readyQuestionNumber);
 	$("#rd-form-number").val(readyQuestionNumber.toString());
-	$("<span></span>").appendTo($("<a href='#ready'></a>")).trigger("click");
+	$("#ready").removeClass("none-display");
 }
 
 init_ready();

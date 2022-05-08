@@ -20,9 +20,8 @@
 }
 
 .rd-item {
-	margin-right: 3em;
 	display: grid;
-	grid-template-columns: 30% 70%;
+	grid-template-columns: 5em auto;
 	grid-template-areas: "desc input";
 }
 
@@ -39,7 +38,12 @@
 }
 
 .rd-input {
-	min-width: 50%;
+	min-width: 4em;
+}
+
+#rd-form-item-note {
+	font-size: 0.8em;
+	color: #ff8800;
 }
 
 #rd-submit {

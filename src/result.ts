@@ -1,10 +1,10 @@
-/// <reference path="./exercise.ts"/>
+/// <reference path="../src/exercise.ts"/>
 
 function init_result() {
 	$("#report").html("");
 	$("#rem-type").text(`${dataItems[0][readyItem - 1]}-${dataItems[readyItem][readyDifficulty - 1]}`);
 	var startTime: Date = questions[0].startTime;
-	$("#rem-start").text(`${startTime.getFullYear()}/${startTime.getMonth() + 1}/${startTime.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}:${startTime.getSeconds()}`);
+	$("#rem-start").text(startTime.toLocaleString());
 	$("#rem-number").text(readyQuestionNumber);
 	$("#rem-correct").text(correctNumber);
 	$("#rem-time").html(`<span>${Math.floor(usedTime / 1000)}秒</span><span class="rem-time-ms">${sup0(usedTime % 1000, 3)}毫秒</span>`);
@@ -12,7 +12,7 @@ function init_result() {
 	$("#rem-accuracy").text((correctNumber / readyQuestionNumber * 100).toFixed(1) + "%");
 	var avgTime: number = Math.round(usedTime / readyQuestionNumber);
 	$("#rem-avgtime").html(`<span>${Math.floor(avgTime / 1000)}秒</span><span class="rem-time-ms">${sup0(avgTime % 1000, 3)}毫秒</span>`);
-	$("#rem-link").text(location.href.split("#")[0]);
+	$("#rem-link").text(location.href);
 	var $report = $("#report");
 	for (let i in questions) {
 		let q = questions[i];
@@ -25,4 +25,10 @@ function init_result() {
 		.append($("<span></span>").html(q.get_faults().join("<br>")).attr({"class": "red"}))
 		.appendTo($report);
 	}
+}
+
+function res_finish() {
+	init_ready();
+	$("#result").addClass("none-display");
+	$("#ready").removeClass("none-display");
 }

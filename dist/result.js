@@ -1,9 +1,9 @@
-/// <reference path="./exercise.ts"/>
+/// <reference path="../src/exercise.ts"/>
 function init_result() {
     $("#report").html("");
     $("#rem-type").text("".concat(dataItems[0][readyItem - 1], "-").concat(dataItems[readyItem][readyDifficulty - 1]));
     var startTime = questions[0].startTime;
-    $("#rem-start").text("".concat(startTime.getFullYear(), "/").concat(startTime.getMonth() + 1, "/").concat(startTime.getDate(), " ").concat(startTime.getHours(), ":").concat(startTime.getMinutes(), ":").concat(startTime.getSeconds()));
+    $("#rem-start").text(startTime.toLocaleString());
     $("#rem-number").text(readyQuestionNumber);
     $("#rem-correct").text(correctNumber);
     $("#rem-time").html("<span>".concat(Math.floor(usedTime / 1000), "\u79D2</span><span class=\"rem-time-ms\">").concat(sup0(usedTime % 1000, 3), "\u6BEB\u79D2</span>"));
@@ -11,7 +11,7 @@ function init_result() {
     $("#rem-accuracy").text((correctNumber / readyQuestionNumber * 100).toFixed(1) + "%");
     var avgTime = Math.round(usedTime / readyQuestionNumber);
     $("#rem-avgtime").html("<span>".concat(Math.floor(avgTime / 1000), "\u79D2</span><span class=\"rem-time-ms\">").concat(sup0(avgTime % 1000, 3), "\u6BEB\u79D2</span>"));
-    $("#rem-link").text(location.href.split("#")[0]);
+    $("#rem-link").text(location.href);
     var $report = $("#report");
     for (var i in questions) {
         var q = questions[i];
@@ -24,4 +24,9 @@ function init_result() {
             .append($("<span></span>").html(q.get_faults().join("<br>")).attr({ "class": "red" }))
             .appendTo($report);
     }
+}
+function res_finish() {
+    init_ready();
+    $("#result").addClass("none-display");
+    $("#ready").removeClass("none-display");
 }

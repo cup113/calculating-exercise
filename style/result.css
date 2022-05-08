@@ -1,9 +1,11 @@
-body>div:nth-child(3) {
+#result {
 	background-image: url("../img/calculator.svg");
 	background-color: #00cbc5;
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center;
+	padding: 0;
+	min-height: 100vh;
 }
 
 #res-main {
@@ -44,10 +46,17 @@ body>div:nth-child(3) {
 }
 
 #report {
-	margin: 10vh 10vw 0 10vw;
+	margin: 4px 10vw 3rem 10vw;
+	padding: 8px 4px;
 	background-color: #ffffccd0;
 	text-align: center;
-	margin-bottom: 3rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	align-items: center;
+	align-content: center;
+	row-gap: 8px;
+	column-gap: 8px;
 }
 
 #report>span {
